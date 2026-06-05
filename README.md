@@ -4,7 +4,7 @@ Program simulasi evakuasi bencana Sesar Lembang berbasis Queue, Graph, dan Dijks
 
 ## Struktur Modul
 
-- `draftIndra_fixed2_1.cpp`: entry point / `main`
+- `main.cpp`: entry point / `main`
 - `constants.h`, `models.h`, `globals.*`: konstanta, struktur data, dan state global
 - `utils.*`: input aman dan layar
 - `queue.*`: operasi antrean warga
