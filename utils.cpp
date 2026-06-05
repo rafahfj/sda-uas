@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <cstdio>
 #include <iostream>
 #include "utils.h"
 
@@ -14,6 +15,18 @@ bool bacaInt(int &nilai) {
         cout << "  [!] Input tidak valid. Harap masukkan angka.\n";
         return false;
     }
+
+    while (cin.peek() == ' ' || cin.peek() == '\t') {
+        cin.get();
+    }
+
+    int karakterBerikutnya = cin.peek();
+    if (karakterBerikutnya != '\n' && karakterBerikutnya != '\r' && karakterBerikutnya != EOF) {
+        cin.ignore(10000, '\n');
+        cout << "  [!] Input tidak valid. Harap masukkan angka tanpa karakter tambahan.\n";
+        return false;
+    }
+
     return true;
 }
 

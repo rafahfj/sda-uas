@@ -18,7 +18,7 @@ int isEmpty(int nodeIdx) {
 
 // Fungsi Enqueue (Tambah data warga ke antrean)
 void insertQueue(int nodeIdx, Person p) {
-    if (antrian[nodeIdx].top >= MAX_ANTREAN - 1) {
+    if (antrian[nodeIdx].top >= MAX_ANTREAN) {
         cout << "Maaf, antrean di lokasi ini sudah penuh!\n";
         return;
     }

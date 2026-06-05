@@ -79,7 +79,7 @@ void displayNodes() {
 
     int kecIdx = findNodeIndex(kecID);
     // FIX: cukup cek tipenya Kecamatan, kondisi && sebelumnya terlalu ketat
-    if (kecIdx == -1 || nodes[kecIdx].tipe != "Kecamatan") {
+    if (kecIdx == -1 || nodes[kecIdx].tipe != "Kecamatan" || nodes[kecIdx].parentID != kotaID) {
         cout << "ID Kecamatan tidak valid!\n";
         return;
     }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "display.h"
 #include "globals.h"
 #include "graph.h"
@@ -7,6 +8,20 @@
 #include "utils.h"
 
 using namespace std;
+
+bool isPilihanBinerValid(int nilai) {
+    return nilai == 0 || nilai == 1;
+}
+
+bool isIndukKotaKabupatenValid(int id) {
+    int idx = findNodeIndex(id);
+    return idx != -1 && (nodes[idx].tipe == "Kota" || nodes[idx].tipe == "Kabupaten");
+}
+
+bool isIndukKecamatanValid(int id) {
+    int idx = findNodeIndex(id);
+    return idx != -1 && nodes[idx].tipe == "Kecamatan";
+}
 
 // ======================== MANAJEMEN CRUD LOKASI (NODE) ========================
 void createNode() {
@@ -41,12 +56,20 @@ void createNode() {
     }
 
     cout << "Masukkan nama lokasi baru: "; getline(cin, nodes[slot].name);
+    if (nodes[slot].name == "") {
+        cout << "Nama lokasi tidak boleh kosong. Input dibatalkan.\n";
+        return;
+    }
 
     if (pilihanTipe == 1) {
         // FIX: tambah pilihan Kabupaten agar konsisten dengan data preset
         cout << "Pilih jenis wilayah (1=Kota, 2=Kabupaten): ";
         int jenisWilayah;
         if (!bacaInt(jenisWilayah)) { cout << "Input dibatalkan.\n"; return; }
+        if (jenisWilayah < 1 || jenisWilayah > 2) {
+            cout << "Pilihan jenis wilayah tidak valid. Input dibatalkan.\n";
+            return;
+        }
         nodes[slot].tipe = (jenisWilayah == 2) ? "Kabupaten" : "Kota";
         nodes[slot].parentID = 0;
         nodes[slot].isSafe = false;
@@ -63,6 +86,10 @@ void createNode() {
         }
         cout << "Masukkan ID Kota/Kabupaten Induk: ";
         if (!bacaInt(nodes[slot].parentID)) { cout << "Input dibatalkan.\n"; return; }
+        if (!isIndukKotaKabupatenValid(nodes[slot].parentID)) {
+            cout << "ID induk harus berupa Kota/Kabupaten yang aktif. Input dibatalkan.\n";
+            return;
+        }
 
     } else if (pilihanTipe == 3) {
         cout << "\n--- PILIH KECAMATAN INDUK UNTUK DESA INI ---\n";
@@ -74,10 +101,18 @@ void createNode() {
 
         cout << "Masukkan ID Kecamatan Induk: ";
         if (!bacaInt(nodes[slot].parentID)) { cout << "Input dibatalkan.\n"; return; }
+        if (!isIndukKecamatanValid(nodes[slot].parentID)) {
+            cout << "ID induk harus berupa Kecamatan yang aktif. Input dibatalkan.\n";
+            return;
+        }
 
         cout << "Apakah lokasi ini Posko Aman? (1=Ya, 0=Tidak): ";
         int safe;
         if (!bacaInt(safe)) { cout << "Input dibatalkan.\n"; return; }
+        if (!isPilihanBinerValid(safe)) {
+            cout << "Pilihan status aman harus 1 atau 0. Input dibatalkan.\n";
+            return;
+        }
         nodes[slot].isSafe = (safe == 1);
         nodes[slot].tipe = (safe == 1) ? "Posko" : "Desa";
     }
@@ -105,10 +140,25 @@ void updateNode() {
     }
     cout << "Nama baru lokasi: ";
     cin.ignore();
-    getline(cin, nodes[idx].name);
+    string namaBaru;
+    getline(cin, namaBaru);
+    if (namaBaru == "") {
+        cout << "Nama lokasi tidak boleh kosong. Update dibatalkan.\n";
+        return;
+    }
+    if (nodes[idx].tipe != "Desa" && nodes[idx].tipe != "Kelurahan" && nodes[idx].tipe != "Posko") {
+        nodes[idx].name = namaBaru;
+        cout << "Nama lokasi sukses diperbarui. Status aman tidak diubah untuk Kota/Kabupaten/Kecamatan.\n";
+        return;
+    }
     cout << "Status titik aman baru? (1=Ya, 0=Tidak): ";
     int safe;
     if (!bacaInt(safe)) { cout << "Input dibatalkan.\n"; return; }
+    if (!isPilihanBinerValid(safe)) {
+        cout << "Pilihan status aman harus 1 atau 0. Update dibatalkan.\n";
+        return;
+    }
+    nodes[idx].name = namaBaru;
     nodes[idx].isSafe = (safe == 1);
     // Sesuaikan tipe jika posko/bukan posko
     if (safe == 1 && nodes[idx].tipe != "Posko") nodes[idx].tipe = "Posko";

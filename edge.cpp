@@ -75,7 +75,7 @@ void deleteEdge() {
     int fromIdx = findNodeIndex(fromId);
     int toIdx = findNodeIndex(toId);
 
-    if (fromIdx == -1 || toIdx == -1) {
+    if (fromIdx == -1 || toIdx == -1 || w[fromIdx][toIdx] == INF) {
         cout << "Rute tidak ditemukan.\n";
         return;
     }

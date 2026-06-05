@@ -16,7 +16,7 @@ struct Person {
 // ======================== STRUKTUR DATA QUEUE ========================
 struct AntrianWarga {
     int top;
-    Person isi[MAX_ANTREAN];
+    Person isi[MAX_ANTREAN + 1];
 };
 
 // ======================== STRUKTUR DATA NODE/GRAPH LOKASI ========================
