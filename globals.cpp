@@ -1,5 +1,7 @@
 #include "globals.h"
 
+// Pembagian kerja: Anggota 2
+// Fokus: definisi state global aplikasi.
 AntrianWarga antrian[MAX_LOKASI + 1]; 
 Node nodes[MAX_LOKASI + 1];
 int nnode = 0; 

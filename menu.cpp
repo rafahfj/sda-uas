@@ -11,6 +11,8 @@ using namespace std;
 extern int nnode;
 void createQueue(int nodeIdx);
 
+// Pembagian kerja: Anggota 5
+// Fokus: menu aplikasi dan integrasi antar modul.
 // ==== SUB-MENU ====
 void menuLokasi() {
     int choice;

@@ -9,6 +9,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 5
+// Fokus: CRUD node/lokasi pada graph evakuasi.
 bool isPilihanBinerValid(int nilai) {
     return nilai == 0 || nilai == 1;
 }

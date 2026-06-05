@@ -8,6 +8,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 2
+// Fokus: fitur tambah dan hapus warga pada antrean lokasi.
 // ==== MANAJEMEN CRUD WARGA CORNER ====
 void addPerson() {
     displayNodes(); 

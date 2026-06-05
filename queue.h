@@ -6,6 +6,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 1
+// Fokus: deklarasi operasi queue warga.
 void createQueue(int nodeIdx);
 int isEmpty(int nodeIdx);
 void insertQueue(int nodeIdx, Person p);

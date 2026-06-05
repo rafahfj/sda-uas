@@ -6,6 +6,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 4
+// Fokus: alur simulasi evakuasi, pemilihan rute Dijkstra, dan laporan hasil.
 // ==== PROSES LOGIKA SIMULASI EVAKUASI WAKTU ====
 void runSimulation() {
     int daftarPosko[MAX_LOKASI + 1];

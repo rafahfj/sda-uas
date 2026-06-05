@@ -8,6 +8,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 4
+// Fokus: randomisasi data warga dan jalur graph untuk kebutuhan simulasi.
 // ==== RANDOMISASI WARGA & JALUR ====
 void randomisasi() {
     srand((unsigned int)time(0));

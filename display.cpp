@@ -6,6 +6,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 5
+// Fokus: tampilan hierarki lokasi, posko, dan edge graph.
 void displayPosko() {
     cout << "\n--- DAFTAR LOKASI POSKO ---\n";
     bool posko = false;

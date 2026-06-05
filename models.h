@@ -6,6 +6,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 1
+// Fokus: struktur data dasar, terutama Person dan AntrianWarga untuk queue.
 struct Person {
     int id;
     string name;

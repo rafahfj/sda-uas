@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 3
+// Fokus: inisialisasi data graph, helper indeks, dan algoritma Dijkstra.
 void inisialisasiGraph() {
     nnode = 0;
     for (int i = 1; i <= MAX_LOKASI; i++) {

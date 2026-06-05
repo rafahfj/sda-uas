@@ -7,6 +7,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 3
+// Fokus: CRUD edge/jalur pada graph evakuasi.
 // ==== MANAJEMEN CRUD JALUR (EDGE) ====
 void createEdge() {
     displayNodes();

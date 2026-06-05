@@ -3,6 +3,8 @@
 
 #include <string>
 
+// Pembagian kerja: Anggota 2
+// Fokus: deklarasi utilitas input dan layar.
 bool bacaInt(int &nilai);
 void clearScreen();
 void backToMenu();

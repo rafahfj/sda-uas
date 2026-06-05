@@ -7,6 +7,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 5
+// Fokus: entry point aplikasi dan pemanggilan menu utama.
 int main() {
     inisialisasiGraph();
     clearScreen();

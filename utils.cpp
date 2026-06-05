@@ -7,6 +7,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 2
+// Fokus: utilitas input aman, clear screen, dan pause menu.
 // ==== FUNGSI BANTU INPUT AMAN ====
 bool bacaInt(int &nilai) {
     string input;

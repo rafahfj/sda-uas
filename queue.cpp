@@ -4,6 +4,8 @@
 
 using namespace std;
 
+// Pembagian kerja: Anggota 1
+// Fokus: implementasi operasi queue warga (create, enqueue, dequeue, search).
 void createQueue(int nodeIdx) {
     antrian[nodeIdx].top = 0;
 }
