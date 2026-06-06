@@ -50,10 +50,6 @@ void inisialisasiGraph() {
 
     nnode = idTerbesar;
     
-    // =========================================================================
-    // PRESET JALUR OTOMATIS (Hubungan Ketetanggan untuk bahan uji coba Dijkstra)
-    // =========================================================================
-    
     // 1. Jalur Keluar dari Desa Suntenjaya (ID 5) punya 2 Alternatif rute ke Posko Sabuga:
     // Lewat Pertigaan Maribaya (ID 7)
     w[5][7] = 8;   kapasitasJalur[5][7] = 20;
@@ -64,8 +60,8 @@ void inisialisasiGraph() {
     w[9][12] = 10; kapasitasJalur[9][12] = 15; // Total waktu = 15 + 10 = 25 menit
     
     // 2. Jalur dari Desa Lembang Utama (ID 1) menuju Posko Utama Lembang (ID 11)
-    w[1][8] = 4;   kapasitasJalur[1][8] = 30;  // Ke Jalan Raya Lembang Pusat
-    w[8][11] = 5;  kapasitasJalur[8][11] = 40; // Dari Pusat ke Stadion Sporthall
+    w[1][8] = 4;   kapasitasJalur[1][8] = 30;  
+    w[8][11] = 5;  kapasitasJalur[8][11] = 40;
 
     // 3. Jalur dari Desa Pagerwangi (ID 2) menuju Posko Gasibu (ID 13) lewat Dago Giri
     w[2][10] = 6;  kapasitasJalur[2][10] = 15;
@@ -76,7 +72,7 @@ void inisialisasiGraph() {
 
 // ===== FUNGSI BANTU INDEKS ====
 int findNodeIndex(int id) {
-    for (int i = 1; i <= nnode; i++) { // Dioptimasi batasnya sampai nnode saja
+    for (int i = 1; i <= nnode; i++) { 
         if (nodes[i].isActive && nodes[i].id == id) return i;
     }
     return -1;

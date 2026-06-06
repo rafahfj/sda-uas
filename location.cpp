@@ -13,16 +13,6 @@ bool isPilihanBinerValid(int nilai) {
     return nilai == 0 || nilai == 1;
 }
 
-// bool isIndukKotaKabupatenValid(int id) {
-//     int idx = findNodeIndex(id);
-//     return idx != -1 && (nodes[idx].tipe == "Kota" || nodes[idx].tipe == "Kabupaten");
-// }
-
-// bool isIndukKecamatanValid(int id) {
-//     int idx = findNodeIndex(id);
-//     return idx != -1 && nodes[idx].tipe == "Kecamatan";
-// }
-
 // ===== MANAJEMEN CRUD LOKASI (NODE) ====
 void createNode() {
     int slot = -1;

@@ -234,19 +234,6 @@ void runSimulation() {
     }
 }
 
-// // void caraMenggunakanSimulasi() {
-//     cout << "\n  CARA MENGGUNAKAN SIMULASI\n\n";
-//     cout << "  1. Tambahkan lokasi (Menu Lokasi)\n";
-//     cout << "     Minimal 1 lokasi BAHAYA dan 1 POSKO AMAN\n\n";
-//     cout << "  2. Hubungkan jalur antar lokasi (Menu Jalur)\n";
-//     cout << "     Tentukan waktu tempuh dan kapasitas jalur\n\n";
-//     cout << "  3. Tambahkan warga ke lokasi bahaya (Menu Warga)\n\n";
-//     cout << "  4. Jalankan simulasi (Menu Simulasi)\n";
-//     cout << "     Sistem otomatis cari rute tercepat (Dijkstra)\n";
-//     cout << "     Warga berpindah setiap menit\n\n";
-// // }
-
-
 void caraMenggunakanSimulasi() {
     cout << "\n===========================================================\n";
     cout << "            CARA MENGGUNAKAN SIMULASI (ALUR UTAMA)           \n";

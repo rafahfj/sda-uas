@@ -12,10 +12,9 @@ bool bacaInt(int &nilai) {
     string input;
     cin >> input;
 
-    // Cek apakah seluruh karakter adalah digit (boleh negatif)
     bool valid = true;
     for (size_t i = 0; i < input.length(); i++) {
-        if (i == 0 && input[i] == '-') continue; // izinkan tanda negatif di awal
+        if (i == 0 && input[i] == '-') continue;
         if (!isdigit(input[i])) {
             valid = false;
             break;
@@ -25,15 +24,12 @@ bool bacaInt(int &nilai) {
     if (!valid) {
         cout << "  [!] Input tidak valid. Harap masukkan angka.\n";
         cin.clear();
-        // Bersihkan buffer sampai newline
         cin.ignore(10000, '\n');
         return false;
     }
 
-    // Konversi string ke integer
-    nilai = stoi(input);
+    nilai = stoi(input); //utk konversi 
     
-    // Bersihkan buffer jika masih ada sisa (misal: "123 abc")
     cin.ignore(10000, '\n');
     
     return true;
