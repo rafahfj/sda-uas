@@ -16,7 +16,6 @@ int isEmpty(int nodeIdx) {
     }
 }
 
-// Fungsi Enqueue (Tambah data warga ke antrean)
 void insertQueue(int nodeIdx, Person p) {
     if (antrian[nodeIdx].top >= MAX_ANTREAN) {
         cout << "Maaf, antrean di lokasi ini sudah penuh!\n";
@@ -26,13 +25,10 @@ void insertQueue(int nodeIdx, Person p) {
     antrian[nodeIdx].isi[antrian[nodeIdx].top] = p;
 }
 
-// Fungsi Dequeue
 void deleteQueue(int nodeIdx) {
     if (isEmpty(nodeIdx) == 1) {
-        // Jika kosong, tidak ada tindakan atau cetak pesan kosong
         return;
     } else {
-        // Menggeser antrean ke depan (indeks dimulai dari 1 agar konsisten dengan loop geser dosen)
         for (int i = 2; i <= antrian[nodeIdx].top; i++) {
             antrian[nodeIdx].isi[i - 1] = antrian[nodeIdx].isi[i];
         }
@@ -40,7 +36,6 @@ void deleteQueue(int nodeIdx) {
     }
 }
 
-// Fungsi cari antrean manual (Hanya contoh pelengkap sesuai fungsi 'findQueue' materi dosen)
 void findQueue(int nodeIdx, string cari) {
     string temp = "";
     int itemp = 0;
@@ -48,7 +43,6 @@ void findQueue(int nodeIdx, string cari) {
     if (isEmpty(nodeIdx) == 1) {
         cout << "Maaf pencarian data tidak dapat dilakukan karena antrian kosong\n";
     } else {
-        // Loop pencarian berdasarkan penanda antrian.top dari dosen
         for (int i = 1; i <= antrian[nodeIdx].top; i++) {
             if (cari == antrian[nodeIdx].isi[i].name) {
                 temp = cari;

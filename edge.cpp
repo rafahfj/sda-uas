@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// ======================== MANAJEMEN CRUD JALUR (EDGE) ========================
+// ==== MANAJEMEN CRUD JALUR (EDGE) ====
 void createEdge() {
     displayNodes();
     int fromId, toId;
@@ -75,11 +75,27 @@ void deleteEdge() {
     int fromIdx = findNodeIndex(fromId);
     int toIdx = findNodeIndex(toId);
 
-    if (fromIdx == -1 || toIdx == -1 || w[fromIdx][toIdx] == INF) {
+    if (fromIdx == -1 || toIdx == -1) {
+        cout << "Lokasi tidak ditemukan.\n";
+        return;
+    }
+    
+    if (w[fromIdx][toIdx] == INF) {
         cout << "Rute tidak ditemukan.\n";
         return;
     }
-    w[fromIdx][toIdx] = INF;
-    kapasitasJalur[fromIdx][toIdx] = 0;
-    cout << "Rute evakuasi sukses diputus.\n";
+    
+    char konfirmasi;
+    cout << "\n [!] PERINGATAN: Aksi ini akan memutus jalur!\n";
+    cout << " Apakah Anda yakin ingin memutus jalur tersebut? (y/n): "; 
+    cin >> konfirmasi;
+    cin.ignore(10000, '\n');
+    
+    if (konfirmasi == 'y' || konfirmasi == 'Y') {
+        w[fromIdx][toIdx] = INF;
+        kapasitasJalur[fromIdx][toIdx] = 0;
+        cout << " [+] Rute evakuasi sukses diputus.\n";
+    } else {
+        cout << " [-] Aksi dibatalkan. Pemutusan data jalur tidak dilakukan.\n";
+    }
 }
