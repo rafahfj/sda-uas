@@ -23,7 +23,7 @@ bool isIndukKecamatanValid(int id) {
     return idx != -1 && nodes[idx].tipe == "Kecamatan";
 }
 
-// ======================== MANAJEMEN CRUD LOKASI (NODE) ========================
+// ===== MANAJEMEN CRUD LOKASI (NODE) ====
 void createNode() {
     int slot = -1;
     for (int i = 1; i <= MAX_LOKASI; i++) {
@@ -62,7 +62,6 @@ void createNode() {
     }
 
     if (pilihanTipe == 1) {
-        // FIX: tambah pilihan Kabupaten agar konsisten dengan data preset
         cout << "Pilih jenis wilayah (1=Kota, 2=Kabupaten): ";
         int jenisWilayah;
         if (!bacaInt(jenisWilayah)) { cout << "Input dibatalkan.\n"; return; }
@@ -77,7 +76,6 @@ void createNode() {
     } else if (pilihanTipe == 2) {
         nodes[slot].tipe = "Kecamatan";
 
-        // FIX: tampilkan Kota DAN Kabupaten sebagai pilihan induk kecamatan
         cout << "\n--- PILIH KOTA/KABUPATEN INDUK UNTUK KECAMATAN INI ---\n";
         for (int i = 1; i <= nnode; i++){
             if (nodes[i].isActive && (nodes[i].tipe == "Kota" || nodes[i].tipe == "Kabupaten")) {
@@ -160,7 +158,6 @@ void updateNode() {
     }
     nodes[idx].name = namaBaru;
     nodes[idx].isSafe = (safe == 1);
-    // Sesuaikan tipe jika posko/bukan posko
     if (safe == 1 && nodes[idx].tipe != "Posko") nodes[idx].tipe = "Posko";
     else if (safe == 0 && nodes[idx].tipe == "Posko") nodes[idx].tipe = "Desa";
     cout << "Data lokasi sukses diperbarui.\n";
@@ -177,7 +174,6 @@ void deleteNode() {
         return;
     }
 
-    // Hapus total relasi rute di matriks
     for (int i = 1; i <= MAX_LOKASI; i++) {
         w[idx][i] = INF;
         w[i][idx] = INF;
@@ -185,7 +181,6 @@ void deleteNode() {
         kapasitasJalur[i][idx] = 0;
     }
 
-    // Kosongkan antrean warga di dalamnya
     createQueue(idx);
     nodes[idx].isActive = false;
     cout << "Lokasi beserta jalur hubungannya sukses dihapus dari peta simulasi.\n";

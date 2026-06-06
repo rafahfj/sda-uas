@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// ======================== MANAJEMEN CRUD JALUR (EDGE) ========================
+// ==== MANAJEMEN CRUD JALUR (EDGE) ====
 void createEdge() {
     displayNodes();
     int fromId, toId;

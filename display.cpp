@@ -25,89 +25,28 @@ void displayPosko() {
 }
 
 void displayNodes() {
-    cout << "\n--- DAFTAR LOKASI BENCANA ---\n";
+    cout << "\n===========================================================\n";
+    cout << "        DAFTAR LOKASI EVAKUASI KECAMATAN LEMBANG          \n";
+    cout << "===========================================================\n";
+    cout << " ID  | Nama Lokasi                     | Status    | Antrean\n";
+    cout << "-----------------------------------------------------------\n";
+
     bool ada = false;
-    for (int i = 1; i <= MAX_LOKASI; i++) {
-        if (nodes[i].isActive && ((nodes[i].tipe == "Kota") || (nodes[i].tipe == "Kabupaten"))) {
-            cout << "ID: " << nodes[i].id << " | Nama: " << nodes[i].name
-                 << " | Status: " << (nodes[i].isSafe ? "AMAN (POSKO)" : "BAHAYA")
-                 << " | Antrean: " << antrian[i].top << " orang\n";
-            ada = true;
-        }
-    }
-
-    if (!ada){
-        cout << "Belum ada lokasi yang terdaftar.\n";
-        return;
-    }
-
-    int kotaID;
-    cout << "\nPilih ID Kota/Kabupaten untuk melihat data Kecamatan: ";
-    if (!bacaInt(kotaID)) { cout << "Input dibatalkan.\n"; return; }
-
-    int kotaIdx = findNodeIndex(kotaID);
-    if (kotaIdx == -1 || ((nodes[kotaIdx].tipe != "Kota") && (nodes[kotaIdx].tipe != "Kabupaten"))){
-        cout << "ID Kota/Kabupaten tidak valid!\n";
-        return;
-    }
-
-    clearScreen();
-    cout << "\n========================================\n";
-    cout << " KOTA/KABUPATEN: " << nodes[kotaIdx].name << "\n";
-    cout << "========================================\n";
-    cout << "--- DAFTAR KECAMATAN TERSEDIA ---\n\n";
-
-    bool adaKecamatan = false;
     for (int i = 1; i <= nnode; i++) {
-        if (nodes[i].isActive && nodes[i].tipe == "Kecamatan" && nodes[i].parentID == kotaID){
-            cout << "ID: " << nodes[i].id << " | Nama: " << nodes[i].name
-                 << " | Status: " << (nodes[i].isSafe ? "AMAN (POSKO)" : "BAHAYA")
-                 << " | Antrean: " << antrian[i].top << " orang\n";
+        if (nodes[i].isActive) {
+            printf(" %-3d | %-31s | %-9s | %d orang\n", 
+                   nodes[i].id, 
+                   nodes[i].name.c_str(), 
+                   (nodes[i].isSafe ? "POSKO" : "BAHAYA"), 
+                   antrian[i].top);
             ada = true;
-            adaKecamatan = true;
         }
     }
 
-    if (!adaKecamatan) {
-        cout << "Tidak ada data kecamatan di dalam wilayah ini.\n";
-        return;
+    if (!ada) {
+        cout << " [!] Belum ada data lokasi yang terdaftar.\n";
     }
-
-    int kecID;
-    cout << "\nPilih ID Kecamatan untuk melihat data Desa/Posko: ";
-    if (!bacaInt(kecID)) { cout << "Input dibatalkan.\n"; return; }
-
-    int kecIdx = findNodeIndex(kecID);
-    // FIX: cukup cek tipenya Kecamatan, kondisi && sebelumnya terlalu ketat
-    if (kecIdx == -1 || nodes[kecIdx].tipe != "Kecamatan" || nodes[kecIdx].parentID != kotaID) {
-        cout << "ID Kecamatan tidak valid!\n";
-        return;
-    }
-
-    clearScreen();
-    cout << "\n========================================\n";
-    cout << " KECAMATAN: " << nodes[kecIdx].name << "\n";
-    cout << "========================================\n";
-    cout << "--- DAFTAR DESA / KELURAHAN TERSEDIA ---\n\n";
-
-    bool adaDesa = false;
-    for (int i = 1; i <= nnode; i++) {
-        if (nodes[i].isActive &&
-           ((nodes[i].tipe == "Desa") || (nodes[i].tipe == "Kelurahan") || (nodes[i].tipe == "Posko")) &&
-            nodes[i].parentID == kecID){
-            // cout << "[" << nodes[i].id << "] " << nodes[i].name << endl;
-            cout << "ID: " << nodes[i].id << " | Nama: " << nodes[i].name
-                 << " | Status: " << (nodes[i].isSafe ? "AMAN (POSKO)" : "BAHAYA")
-                 << " | Antrean: " << antrian[i].top << " orang\n";
-            ada = true;
-            adaDesa = true;
-        }
-    }
-
-    if (!adaDesa) {
-        cout << "Tidak ada data desa atau posko aman di dalam Kecamatan ini.\n";
-        return;
-    }
+    cout << "===========================================================\n";
 }
 
 void displayEdges() {

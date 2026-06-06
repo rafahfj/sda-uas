@@ -16,7 +16,7 @@ int main() {
         showMenu();
         if (!bacaInt(choice)) { backToMenu(); continue; }
         clearScreen();
-        switch (choice) {
+        switch (choice) {       
             case 1: menuLokasi();              break;
             case 2: menuJalur();               break;
             case 3: menuWarga();               break;

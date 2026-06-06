@@ -8,7 +8,10 @@
 
 using namespace std;
 
-// ======================== SUB-MENU ========================
+extern int nnode;
+void createQueue(int nodeIdx);
+
+// ==== SUB-MENU ====
 void menuLokasi() {
     int choice;
     do {
@@ -63,23 +66,38 @@ void menuWarga() {
     int choice;
     do {
         clearScreen();
-        cout << "\n  MANAJEMEN WARGA\n\n";
-        cout << "  1. Daftarkan Warga\n";
-        cout << "  2. Bersihkan Antrean\n";
-        cout << "  0. Kembali ke Menu Utama\n\n";
-        cout << "  Pilihan: ";
+        cout << "\n   MANAJEMEN WARGA (KEC. LEMBANG)\n\n";
+        cout << "   1. Daftarkan Warga ke Lokasi\n";
+        cout << "   2. Bersihkan Seluruh Antrean\n";
+        cout << "   0. Kembali ke Menu Utama\n\n";
+        cout << "   Pilihan: ";
+        
         if (!bacaInt(choice)) { backToMenu(); continue; }
+        
         clearScreen();
         switch (choice) {
-            case 1: addPerson();    backToMenu(); break;
-            case 2: deletePerson(); backToMenu(); break;
-            case 0: break;
-            default: cout << "  Pilihan tidak valid.\n"; backToMenu();
+            case 1: 
+                displayNodes();
+                addPerson();  
+                backToMenu(); 
+                break;
+            case 2: 
+                for(int i = 1; i <= nnode; i++) {
+                    createQueue(i);
+                }
+                cout << "   [+] Seluruh antrean warga telah dibersihkan.\n";
+                backToMenu(); 
+                break;
+            case 0: 
+                break;
+            default: 
+                cout << "   Pilihan tidak valid.\n"; 
+                backToMenu();
         }
     } while (choice != 0);
 }
 
-// ======================== MENU UTAMA ========================
+// ==== MENU UTAMA ====
 void showMenu() {
     cout << "\n  SIMULASI EVAKUASI BENCANA SESAR LEMBANG\n";
     cout << "  (Queue & Graph - Dijkstra)\n\n";

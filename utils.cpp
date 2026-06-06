@@ -5,8 +5,7 @@
 
 using namespace std;
 
-// ======================== FUNGSI BANTU INPUT AMAN ========================
-// Mencegah infinite loop saat user memasukkan karakter bukan angka (misal: huruf, simbol)
+// ==== FUNGSI BANTU INPUT AMAN ====
 bool bacaInt(int &nilai) {
     cin >> nilai;
     if (cin.fail()) {
@@ -22,7 +21,7 @@ bool bacaInt(int &nilai) {
 
     int karakterBerikutnya = cin.peek();
     if (karakterBerikutnya != '\n' && karakterBerikutnya != '\r' && karakterBerikutnya != EOF) {
-        cin.ignore(10000, '\n');
+        // cin.ignore(10000, '\n');
         cout << "  [!] Input tidak valid. Harap masukkan angka tanpa karakter tambahan.\n";
         return false;
     }
@@ -30,7 +29,6 @@ bool bacaInt(int &nilai) {
     return true;
 }
 
-// function buat clearscreen
 void clearScreen(){
     #ifdef _WIN32
         system("cls");
@@ -41,7 +39,6 @@ void clearScreen(){
 
 void backToMenu() {
     cout << "\nTekan enter untuk kembali ke menu utama..";
-    // FIX: flush sisa buffer dulu, lalu tunggu satu enter
     cin.ignore(10000, '\n');
     cin.get();
     clearScreen();

@@ -6,9 +6,8 @@
 
 using namespace std;
 
-// ======================== PROSES LOGIKA SIMULASI EVAKUASI WAKTU ========================
+// ==== PROSES LOGIKA SIMULASI EVAKUASI WAKTU ====
 void runSimulation() {
-    // Kumpulkan semua posko aman yang ada
     int daftarPosko[MAX_LOKASI + 1];
     int jumlahPosko = 0;
     for (int i = 1; i <= nnode; i++) {
@@ -22,7 +21,6 @@ void runSimulation() {
         return;
     }
 
-    // Hitung total warga awal
     int totalWarga = 0;
     for (int i = 1; i <= nnode; i++) {
         if (nodes[i].isActive && !nodes[i].isSafe) {
@@ -35,18 +33,11 @@ void runSimulation() {
         return;
     }
 
-    // Gandakan cadangan antrean warga asli sebelum disimulasikan agar data aslinya tidak hilang
     AntrianWarga antrianCadangan[MAX_LOKASI + 1];
     for(int i = 1; i <= nnode; i++) {
         antrianCadangan[i] = antrian[i];
     }
 
-    // Header mulai simulasi
-    cout << "\n  SIMULASI EVAKUASI\n";
-    cout << "  Total warga: " << totalWarga << "  |  Maks: 500 menit\n\n";
-
-    // FIX: Dijkstra dihitung SEKALI di sini, bukan di dalam loop tick
-    // Jalur tidak berubah selama simulasi, jadi tidak perlu dihitung ulang tiap menit
     struct HasilDijkstra {
         int ruteTerbaik[MAX_LOKASI + 1];
         int panjangRute;
@@ -72,41 +63,103 @@ void runSimulation() {
         }
     }
 
+    cout << "\n===========================================================\n";
+    cout << "          PROSES ANALISIS JALUR KECAMATAN LEMBANG          \n";
+    cout << "===========================================================\n";
+    
+    for (int i = 1; i <= nnode; i++) {
+        if (nodes[i].isActive && !nodes[i].isSafe && antrian[i].top > 0) {
+            cout << " [SCANNING] Alternatif Jalur Keluar dari " << nodes[i].name << ":\n";
+            cout << "-----------------------------------------------------------\n";
+            
+            bool adaTetangga = false;
+            for (int j = 1; j <= nnode; j++) {
+                if (w[i][j] != INF) {
+                    printf("  -> Ke %-28s | Jarak/Waktu: %2d mnt | Kapasitas: %2d org", 
+                           nodes[j].name.c_str(), w[i][j], kapasitasJalur[i][j]);
+                    
+                    if (hasilPerNode[i].panjangRute > 1 && j == hasilPerNode[i].ruteTerbaik[1]) {
+                        cout << " [REKOMENDASI DIJKSTRA]";
+                    }
+                    cout << "\n";
+                    adaTetangga = true;
+                }
+            }
+            if (!adaTetangga) {
+                cout << "  [!] Jalur buntu total! Tidak ada akses jalan keluar.\n";
+            }
+            
+            cout << "-----------------------------------------------------------\n";
+            cout << " [INFO DIJKSTRA] Keputusan Akhir untuk " << nodes[i].name << ":\n";
+            if (hasilPerNode[i].waktuTerbaik != INF) {
+                cout << "  Rute Tercepat : ";
+                for (int x = 0; x < hasilPerNode[i].panjangRute; x++) {
+                    cout << nodes[hasilPerNode[i].ruteTerbaik[x]].name;
+                    if (x < hasilPerNode[i].panjangRute - 1) cout << " -> ";
+                }
+                cout << "\n  Total Estimasi: " << hasilPerNode[i].waktuTerbaik << " menit\n";
+            } else {
+                cout << "  [!] Jalur Terisolasi! Tidak terhubung ke posko aman manapun.\n";
+            }
+            cout << "===========================================================\n\n";
+        }
+    }
+
+    cout << "Persiapan analisis selesai. Tekan ENTER untuk memulai pergerakan simulasi...\n";
+    cin.get(); cin.get(); 
+
+    cout << "\n  SIMULASI EVAKUASI BERJALAN\n";
+    cout << "  Total warga: " << totalWarga << "  |  Maks: 500 menit\n";
+
     int tick = 0;
     int selamat = 0;
 
-    // Loop pergerakan waktu evakuasi sampai batas maksimum aman 500 tick
     while (selamat < totalWarga && tick < 500) {
         tick++;
         bool adaPergerakan = false;
 
-        // ---- Header menit ----
         int menunggu = 0;
         for (int i = 1; i <= nnode; i++)
             if (nodes[i].isActive && !nodes[i].isSafe) menunggu += antrian[i].top;
 
-        cout << "\n--- Menit " << tick
-             << "  |  menunggu: " << menunggu
-             << "  |  selamat: " << selamat << "/" << totalWarga << " ---\n";
+        cout << "\n--- SIKLUS PERGERAKAN KE-" << tick << " ---\n";
+        cout << "  Status Warga -> Belum Evakuasi: " << menunggu << " org | Berhasil Selamat: " << selamat << "/" << totalWarga << " org\n";
 
-        // ---- Satu baris per lokasi berpenghuni ----
         for (int i = 1; i <= nnode; i++) {
             if (!nodes[i].isActive || nodes[i].isSafe || isEmpty(i) == 1) continue;
+            
             int wkt = hasilPerNode[i].waktuTerbaik;
             int pan = hasilPerNode[i].panjangRute;
+            
             if (wkt == INF || pan < 2) {
-                cout << "  [!] " << nodes[i].name
-                     << " (" << antrian[i].top << " org) -- TERISOLASI\n";
+                cout << "  [!] " << nodes[i].name << " (" << antrian[i].top << " org) -- TERISOLASI\n";
             } else {
                 int next = hasilPerNode[i].ruteTerbaik[1];
-                cout << "  " << nodes[i].name
-                     << " (" << antrian[i].top << " org)"
-                     << " -> " << nodes[next].name
-                     << "\n";
+                int kap = kapasitasJalur[i][next];
+                int jlh = antrian[i].top;
+
+                if (jlh > kap) {
+                    cout << "  [Jalur Utama] " << kap << " org dari " << nodes[i].name << " -> " << nodes[next].name << " (Rekomendasi Dijkstra)\n";
+                    
+                    int altNode = -1;
+                    for (int j = 1; j <= nnode; j++) {
+                        if (w[i][j] != INF && j != next && kapasitasJalur[i][j] > 0) {
+                            altNode = j;
+                            break;
+                        }
+                    }
+                    if (altNode != -1) {
+                        int sisaDipindahkan = (jlh - kap > kapasitasJalur[i][altNode]) ? kapasitasJalur[i][altNode] : (jlh - kap);
+                        cout << "  [Jalur Pengalihan] " << sisaDipindahkan << " org dialihkan lewat -> " << nodes[altNode].name << " karena jalur utama penuh!\n";
+                    } else {
+                        cout << "  [!] Jalur Alternatif tidak ada! " << (jlh - kap) << " org terpaksa mengantre kembali.\n";
+                    }
+                } else {
+                    cout << "  " << nodes[i].name << " (" << jlh << " org) -> " << nodes[next].name << " (Lancar)\n";
+                }
             }
         }
 
-        // ---- Proses pergerakan ----
         for (int i = 1; i <= nnode; i++) {
             if (!nodes[i].isActive || nodes[i].isSafe || isEmpty(i) == 1) continue;
 
@@ -129,14 +182,37 @@ void runSimulation() {
                 }
                 adaPergerakan = true;
             }
+
+            int sisaWarga = antrian[i].top;
+            if (sisaWarga > 0) {
+                int altNodeIdx = -1;
+                for (int j = 1; j <= nnode; j++) {
+                    if (w[i][j] != INF && j != nextNodeIdx && kapasitasJalur[i][j] > 0) {
+                        altNodeIdx = j;
+                        break;
+                    }
+                }
+                if (altNodeIdx != -1) {
+                    int kapasitasAlt = kapasitasJalur[i][altNodeIdx];
+                    int jumlahPindahAlt = (kapasitasAlt < sisaWarga) ? kapasitasAlt : sisaWarga;
+                    for (int k = 0; k < jumlahPindahAlt; k++) {
+                        Person p = antrian[i].isi[1];
+                        deleteQueue(i);
+                        if (nodes[altNodeIdx].isSafe) {
+                            selamat++;
+                        } else {
+                            insertQueue(altNodeIdx, p);
+                        }
+                        adaPergerakan = true;
+                    }
+                }
+            }
         }
 
-        // Ringkasan akhir tick
         int sisaMenunggu = 0;
         for (int i = 1; i <= nnode; i++)
             if (nodes[i].isActive && !nodes[i].isSafe) sisaMenunggu += antrian[i].top;
-        cout << "    => selamat: " << selamat << "/" << totalWarga
-             << "  sisa: " << sisaMenunggu << "\n";
+        cout << "    => selamat: " << selamat << "/" << totalWarga << "  sisa: " << sisaMenunggu << "\n";
 
         if (!adaPergerakan && selamat < totalWarga) {
             cout << "\n  [PERINGATAN] Evakuasi macet! Sisa warga terisolasi (rute buntu / kapasitas 0).\n";
@@ -144,14 +220,15 @@ void runSimulation() {
         }
     }
 
-    // Laporan akhir
-    cout << "\n  HASIL AKHIR SIMULASI\n\n";
-    cout << "  Total korban terdata    : " << totalWarga << " orang\n";
-    cout << "  Berhasil diselamatkan   : " << selamat    << " orang\n";
-    cout << "  Sisa korban tertinggal  : " << (totalWarga - selamat) << " orang\n";
-    cout << "  Total durasi operasi    : " << tick       << " menit\n\n";
+    cout << "\n===========================================================\n";
+    cout << "                    HASIL AKHIR SIMULASI                   \n";
+    cout << "===========================================================\n";
+    cout << "  Total Warga Terdata     : " << totalWarga << " orang\n";
+    cout << "  Total Berhasil Evakuasi : " << selamat    << " orang\n";
+    cout << "  Sisa Warga Tertinggal   : " << (totalWarga - selamat) << " orang\n";
+    cout << "  Total Siklus Mobilisasi : " << tick << " kali pergerakan jalur\n";
+    cout << "===========================================================\n\n";
 
-    // FIX: pulihkan antrean asli agar simulasi bisa dijalankan ulang
     for (int i = 1; i <= nnode; i++) {
         antrian[i] = antrianCadangan[i];
     }
