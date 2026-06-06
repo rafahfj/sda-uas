@@ -21,7 +21,7 @@ struct Node {
     int id;
     string name;
     string tipe; 
-    int parentID;
+    // int parentID;
     bool isSafe;
     bool isActive; 
 };

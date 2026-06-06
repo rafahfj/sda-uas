@@ -18,23 +18,23 @@ void inisialisasiGraph() {
 
     Node dataLokasi[] = {
         // --- DESA-DESA DI KECAMATAN LEMBANG (ZONA BAHAYA/ASAL EVAKUASI) ---
-        {1, "Desa Lembang Utama", "Desa", 6, false, true},
-        {2, "Desa Pagerwangi", "Desa", 6, false, true},
-        {3, "Desa Kayuambon", "Desa", 6, false, true},
-        {4, "Desa Gudang Kahuripan", "Desa", 6, false, true},
-        {5, "Desa Suntenjaya", "Desa", 6, false, true},
-        {6, "Desa Cibodas Lembang", "Desa", 6, false, true},
+        {1, "Desa Lembang Utama", "Desa", false, true},
+        {2, "Desa Pagerwangi", "Desa", false, true},
+        {3, "Desa Kayuambon", "Desa", false, true},
+        {4, "Desa Gudang Kahuripan", "Desa",false, true},
+        {5, "Desa Suntenjaya", "Desa", false, true},
+        {6, "Desa Cibodas Lembang", "Desa", false, true},
 
         // --- TITIK PERANTARA / PERSIMPANGAN JALUR UTAMA & ALTERNATIF ---
-        {7, "Pertigaan Maribaya", "Kecamatan", 6, false, true},
-        {8, "Jalan Raya Lembang (Pusat)", "Kecamatan", 6, false, true},
-        {9, "Jalur Alternatif Citamiang", "Kecamatan", 6, false, true},
-        {10, "Jalan Dago Giri (Jalur Pintas)", "Kecamatan", 6, false, true},
+        {7, "Pertigaan Maribaya", "Jalur", false, true},
+        {8, "Jalan Raya Lembang (Pusat)", "Jalur",false, true},
+        {9, "Jalur Alternatif Citamiang", "Jalur", false, true},
+        {10, "Jalan Dago Giri (Jalur Pintas)", "Jalur", false, true},
 
         // --- POSKO AMAN (TUJUAN AKHIR) ---
-        {11, "Posko Utama Stadion Sporthall Lembang", "Posko", 6, true, true},
-        {12, "Posko Sabuga (Sasana Budaya Ganesha)", "Posko", 22, true, true},
-        {13, "Posko Lapangan Gasibu", "Posko", 21, true, true}
+        {11, "Posko Utama Stadion Sporthall Lembang", "Posko", true, true},
+        {12, "Posko Sabuga (Sasana Budaya Ganesha)", "Posko", true, true},
+        {13, "Posko Lapangan Gasibu", "Posko", true, true}
     };
 
     int totalDataMasuk = sizeof(dataLokasi) / sizeof(dataLokasi[0]);

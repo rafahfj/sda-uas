@@ -101,12 +101,12 @@ void runSimulation() {
             } else {
                 cout << "  [!] Jalur Terisolasi! Tidak terhubung ke posko aman manapun.\n";
             }
-            cout << "===========================================================\n\n";
+            cout << "\n\n===========================================================\n\n";
         }
     }
 
     cout << "Persiapan analisis selesai. Tekan ENTER untuk memulai pergerakan simulasi...\n";
-    cin.get(); cin.get(); 
+    cin.get(); 
 
     cout << "\n  SIMULASI EVAKUASI BERJALAN\n";
     cout << "  Total warga: " << totalWarga << "  |  Maks: 500 menit\n";
@@ -220,7 +220,7 @@ void runSimulation() {
         }
     }
 
-    cout << "\n===========================================================\n";
+    cout << "\n\n===========================================================\n";
     cout << "                    HASIL AKHIR SIMULASI                   \n";
     cout << "===========================================================\n";
     cout << "  Total Warga Terdata     : " << totalWarga << " orang\n";
@@ -234,14 +234,73 @@ void runSimulation() {
     }
 }
 
+// // void caraMenggunakanSimulasi() {
+//     cout << "\n  CARA MENGGUNAKAN SIMULASI\n\n";
+//     cout << "  1. Tambahkan lokasi (Menu Lokasi)\n";
+//     cout << "     Minimal 1 lokasi BAHAYA dan 1 POSKO AMAN\n\n";
+//     cout << "  2. Hubungkan jalur antar lokasi (Menu Jalur)\n";
+//     cout << "     Tentukan waktu tempuh dan kapasitas jalur\n\n";
+//     cout << "  3. Tambahkan warga ke lokasi bahaya (Menu Warga)\n\n";
+//     cout << "  4. Jalankan simulasi (Menu Simulasi)\n";
+//     cout << "     Sistem otomatis cari rute tercepat (Dijkstra)\n";
+//     cout << "     Warga berpindah setiap menit\n\n";
+// // }
+
+
 void caraMenggunakanSimulasi() {
-    cout << "\n  CARA MENGGUNAKAN SIMULASI\n\n";
-    cout << "  1. Tambahkan lokasi (Menu Lokasi)\n";
-    cout << "     Minimal 1 lokasi BAHAYA dan 1 POSKO AMAN\n\n";
-    cout << "  2. Hubungkan jalur antar lokasi (Menu Jalur)\n";
-    cout << "     Tentukan waktu tempuh dan kapasitas jalur\n\n";
-    cout << "  3. Tambahkan warga ke lokasi bahaya (Menu Warga)\n\n";
-    cout << "  4. Jalankan simulasi (Menu Simulasi)\n";
-    cout << "     Sistem otomatis cari rute tercepat (Dijkstra)\n";
-    cout << "     Warga berpindah setiap menit\n\n";
+    cout << "\n===========================================================\n";
+    cout << "            CARA MENGGUNAKAN SIMULASI (ALUR UTAMA)           \n";
+    cout << "===========================================================\n\n";
+
+    cout << " [Tahap 1] Membuat Lokasi [Menu 1]\n";
+    cout << "-----------------------------------\n";
+    cout << "1. Pilih '1. Tambah Lokasi Baru'\n";
+    cout << "2. Masukkan nama lokasi\n";
+    cout << "3. Pilih status lokasi\n";
+    cout << "   - 1 = Posko Aman (Untuk tujuan akhir evakuasi\n";
+    cout << "   - 0 = Desa Bahaya (Untuk tujuan awal evakuasi\n";
+    cout << "4. Wajib minimal memiliki 1 posko aman dan 1 desa zona bahaya\n\n";
+
+    cout << " [Tahap 2] Membuat Jalur Evakuasi [Menu 2]\n";
+    cout << "-------------------------------------------\n";
+    cout << "1. Pilih '1. Buat Jalur Baru'\n";
+    cout << "2. Masukkan ID Lokasi Asal\n";
+    cout << "3. Masukkan ID Lokasi Tujuan\n";
+    cout << "4. Masukkan Kapasitas Jalur (orang per-menit)\n";
+    cout << "5. Masukkan Waktu Tempuh (dalam menit)\n";
+    cout << "6. Proses berulang jika ingin membuat jalur yang terhubung\n\n";
+
+    cout << " [Tahap 3] Menambah Warga [Menu 3]\n";
+    cout << "-------------------------------------------\n";
+    cout << "1. Pilih '1. Daftarkan warga ke lokasi'\n";
+    cout << "2. Pilih ID Lokasi Bahaya\n";
+    cout << "3. Masukkan jumlah warga yang ingin dievakuasi\n\n";
+
+    cout << " [TAHAP 4] MENJALANKAN SIMULASI (Menu 4)\n";
+    cout << " --------------------------------------\n";
+    cout << "1. Pilih '4. Jalankan Simulasi Evakuasi'\n";
+    cout << "2. Sistem akan menganalisis rute tercepat menggunakan Dijkstra\n";
+    cout << "3. Tekan ENTER untuk memulai pergerakan warga\n";
+    cout << "4. Simulasi berjalan otomatis hingga:\n";
+    cout << "   - Semua warga selamat, ATAU\n";
+    cout << "   - Waktu maksimal 500 menit tercapai, ATAU\n";
+    cout << "   - Evakuasi macet karena jalur buntu\n\n";
+
+    cout << " [TAHAP 5] MEMAHAMI HASIL SIMULASI\n";
+    cout << " ---------------------------------\n";
+    cout << "1. Setiap siklus menampilkan pergerakan warga\n";
+    cout << "2. Rekomendasi Dijkstra ditandai dengan [REKOMENDASI DIJKSTRA]\n";
+    cout << "3. Sistem akan menampilkan:\n";
+    cout << "   - Total warga yang berhasil selamat\n";
+    cout << "   - Warga yang masih tertinggal\n";
+    cout << "   - Jumlah siklus pergerakan\n\n";
+
+    cout << " [Tahap 6] Randomisasi Warga dan Jalur [Menu 6 - Opsional]\n";
+    cout << "-------------------------------------------\n";
+    cout << "1. Pilih '6 Randomisasi Warga dan Jalur'\n";
+    cout << "2. Masukkan total warga yang ingin disebar acak\n";
+    cout << "3. Masukkan densitas jalur (1-100, semakin besar makin padat)\n";
+    cout << "4. Sistem akan membuat jalur dan menyebar warga secara otomatis\n";
+
+    cout << "===========================================================\n\n";
 }

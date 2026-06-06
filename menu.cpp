@@ -31,7 +31,7 @@ void menuLokasi() {
             case 2: displayNodes(); backToMenu(); break;
             case 3: displayPosko(); backToMenu(); break;
             case 4: updateNode();   backToMenu(); break;
-            case 5: deleteNode();   backToMenu(); break;
+            case 5: deleteNode(); backToMenu(); break;
             case 0: break;
             default: cout << "  Pilihan tidak valid.\n"; backToMenu();
         }
@@ -77,15 +77,24 @@ void menuWarga() {
         clearScreen();
         switch (choice) {
             case 1: 
-                displayNodes();
+                // displayNodes();
                 addPerson();  
                 backToMenu(); 
                 break;
             case 2: 
-                for(int i = 1; i <= nnode; i++) {
-                    createQueue(i);
+                char konfirmasi;
+                cout << " [!] PERINGATAN: Aksi ini akan menghapus SELURUH warga di semua lokasi!\n";
+                cout << " Apakah Anda yakin ingin membersihkan antrean? (y/n): "; cin >> konfirmasi;
+                cin.ignore(10000, '\n');
+                if (konfirmasi == 'y' || konfirmasi == 'Y') {
+                    for (int i = 1; i <= nnode; i++) {
+                        createQueue(i);
+                    }
+                    cout << "   [+] Seluruh antrean warga telah dibersihkan.\n";
+                } else {
+                    cout << "   [-] Aksi dibatalkan. Penghapusan data warga tidak dilakukan.\n";
                 }
-                cout << "   [+] Seluruh antrean warga telah dibersihkan.\n";
+
                 backToMenu(); 
                 break;
             case 0: 
@@ -99,8 +108,10 @@ void menuWarga() {
 
 // ==== MENU UTAMA ====
 void showMenu() {
-    cout << "\n  SIMULASI EVAKUASI BENCANA SESAR LEMBANG\n";
-    cout << "  (Queue & Graph - Dijkstra)\n\n";
+    cout << "\n===========================================================\n";
+    cout << "            SIMULASI EVAKUASI BENCANA SESAR LEMBANG           \n";
+    cout << "                  (Queue & Graph - Dijkstra)                  \n";
+    cout << "===========================================================\n\n";
     cout << "  1. Manajemen Lokasi\n";
     cout << "  2. Manajemen Jalur\n";
     cout << "  3. Manajemen Warga\n";
